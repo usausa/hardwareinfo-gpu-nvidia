@@ -1,1 +1,1 @@
-# hardwareinfo-nvidia
+# hardwareinfo-gpu-nvidia

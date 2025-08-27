@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/Library/">
-    <Project Path="HardwareInfo.Nvidia/HardwareInfo.Nvidia.csproj" />
+    <Project Path="HardwareInfo.Gpu.Nvidia/HardwareInfo.Gpu.Nvidia.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
@@ -9,7 +9,7 @@
     <File Path="Analyzers.ruleset" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Build.targets" />
-    <File Path="HardwareInfo.Nvidia.sln.DotSettings" />
+    <File Path="HardwareInfo.Gpu.Nvidia.sln.DotSettings" />
     <File Path="LICENSE" />
     <File Path="README.md" />
   </Folder>

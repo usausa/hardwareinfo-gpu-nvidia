@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>HardwareInfo.Nvidia</PackageId>
-    <Title>HardwareInfo.Nvidia</Title>
-    <Description>HardwareInfo.Nvidia.</Description>
+    <PackageId>HardwareInfo.Gpu.Nvidia</PackageId>
+    <Title>HardwareInfo.Gpu.Nvidia</Title>
+    <Description>HardwareInfo.Gpu.Nvidia.</Description>
     <PackageTags>hardware gpu nvidia</PackageTags>
   </PropertyGroup>
 
