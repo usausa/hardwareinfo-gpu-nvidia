@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
+    <CodeAnalysisRuleSet>..\Analyzers.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>HardwareInfo.Nvidia</PackageId>
+    <Title>HardwareInfo.Nvidia</Title>
+    <Description>HardwareInfo.Nvidia.</Description>
+    <PackageTags>hardware gpu nvidia</PackageTags>
+  </PropertyGroup>
+
+</Project>
