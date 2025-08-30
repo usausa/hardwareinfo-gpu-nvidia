@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Library/">
+    <Project Path="ExampleGpuInfo/ExampleGpuInfo.csproj" Id="f8c15ec9-0ece-48d7-a43b-8cbff4bab839" />
     <Project Path="HardwareInfo.Gpu.Nvidia/HardwareInfo.Gpu.Nvidia.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
