@@ -41,15 +41,15 @@ internal static class NativeMethods
 
     public enum NvmlTemperatureSensors
     {
-        NVML_TEMPERATURE_GPU = 0
+        Gpu = 0
     }
 
     public enum NvmlClockType
     {
-        NVML_CLOCK_GRAPHICS = 0,
-        NVML_CLOCK_SM = 1,
-        NVML_CLOCK_MEM = 2,
-        NVML_CLOCK_VIDEO = 3
+        Graphics = 0,
+        Sm = 1,
+        Mem = 2,
+        Video = 3
     }
 
     //------------------------------------------------------------------------

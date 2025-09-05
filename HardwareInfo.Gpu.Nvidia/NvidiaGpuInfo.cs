@@ -67,17 +67,17 @@ public sealed class NvidiaGpuInfo
         PowerUsage = NvmlDeviceGetPowerUsage(device, out var powerUsage) == NvmlReturn.Success ? powerUsage : 0;
         PowerLimit = NvmlDeviceGetEnforcedPowerLimit(device, out var powerLimit) == NvmlReturn.Success ? powerLimit : 0;
 
-        Temperature = NvmlDeviceGetTemperature(device, NvmlTemperatureSensors.NVML_TEMPERATURE_GPU, out var temperature) == NvmlReturn.Success ? temperature : 0;
+        Temperature = NvmlDeviceGetTemperature(device, NvmlTemperatureSensors.Gpu, out var temperature) == NvmlReturn.Success ? temperature : 0;
 
         for (var i = 0u; i < FanCount; i++)
         {
             fanSpeeds[i] = NvmlDeviceGetFanSpeed(device, i, out var fanSpeed) == NvmlReturn.Success ? fanSpeed : 0;
         }
 
-        ClockGraphics = NvmlDeviceGetClockInfo(device, NvmlClockType.NVML_CLOCK_GRAPHICS, out var clock0) == NvmlReturn.Success ? clock0 : 0;
-        ClockSm = NvmlDeviceGetClockInfo(device, NvmlClockType.NVML_CLOCK_SM, out var clock1) == NvmlReturn.Success ? clock1 : 0;
-        ClockMemory = NvmlDeviceGetClockInfo(device, NvmlClockType.NVML_CLOCK_MEM, out var clock2) == NvmlReturn.Success ? clock2 : 0;
-        ClockVideo = NvmlDeviceGetClockInfo(device, NvmlClockType.NVML_CLOCK_VIDEO, out var clock3) == NvmlReturn.Success ? clock3 : 0;
+        ClockGraphics = NvmlDeviceGetClockInfo(device, NvmlClockType.Graphics, out var clock0) == NvmlReturn.Success ? clock0 : 0;
+        ClockSm = NvmlDeviceGetClockInfo(device, NvmlClockType.Sm, out var clock1) == NvmlReturn.Success ? clock1 : 0;
+        ClockMemory = NvmlDeviceGetClockInfo(device, NvmlClockType.Mem, out var clock2) == NvmlReturn.Success ? clock2 : 0;
+        ClockVideo = NvmlDeviceGetClockInfo(device, NvmlClockType.Video, out var clock3) == NvmlReturn.Success ? clock3 : 0;
 
         // TODO other values
     }
