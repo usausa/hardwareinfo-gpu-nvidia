@@ -2,6 +2,8 @@ namespace HardwareInfo.Gpu.Nvidia;
 
 using System.Runtime.InteropServices;
 
+using static HardwareInfo.Gpu.Nvidia.NativeMethods;
+
 // https://docs.nvidia.com/deploy/nvml-api/group__nvmlDeviceQueries.html
 // ReSharper disable CommentTypo
 // ReSharper disable IdentifierTypo
@@ -54,14 +56,14 @@ internal static class NativeMethods
     // Struct
     //------------------------------------------------------------------------
 
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Pack = 8)]
     public struct NvmlUtilization
     {
         public uint Gpu;
         public uint Memory;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, Pack = 8)]
     public struct NvmlMemory
     {
         public ulong Total;
@@ -75,38 +77,54 @@ internal static class NativeMethods
 
     private const string NvmlDll = "nvml.dll";
 
-    [DllImport(NvmlDll, EntryPoint = "nvmlInit_v2")]
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlInit_v2")]
     public static extern NvmlReturn NvmlInit();
 
-    [DllImport(NvmlDll, EntryPoint = "nvmlShutdown")]
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlShutdown")]
     public static extern NvmlReturn NvmlShutdown();
 
-    [DllImport(NvmlDll, EntryPoint = "nvmlDeviceGetCount_v2")]
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetCount_v2")]
     public static extern NvmlReturn NvmlDeviceGetCount(out uint deviceCount);
 
-    [DllImport(NvmlDll, EntryPoint = "nvmlDeviceGetHandleByIndex_v2")]
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetHandleByIndex_v2")]
     public static extern NvmlReturn NvmlDeviceGetHandleByIndex(uint index, out IntPtr device);
 
-    [DllImport(NvmlDll, EntryPoint = "nvmlDeviceGetUtilizationRates")]
+    // Utilization
+
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetUtilizationRates")]
     public static extern NvmlReturn NvmlDeviceGetUtilizationRates(IntPtr device, out NvmlUtilization utilization);
 
-    [DllImport(NvmlDll, EntryPoint = "nvmlDeviceGetTemperature")]
-    public static extern NvmlReturn NvmlDeviceGetTemperature(IntPtr device, NvmlTemperatureSensors sensorType, out uint temp);
+    // Memory
 
-    [DllImport(NvmlDll, EntryPoint = "nvmlDeviceGetMemoryInfo")]
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetMemoryInfo")]
     public static extern NvmlReturn NvmlDeviceGetMemoryInfo(IntPtr device, out NvmlMemory memory);
 
-    [DllImport(NvmlDll, EntryPoint = "nvmlDeviceGetClockInfo")]
-    public static extern NvmlReturn NvmlDeviceGetClockInfo(IntPtr device, NvmlClockType clockType, out uint clock);
+    // Power
 
-    [DllImport(NvmlDll, EntryPoint = "nvmlDeviceGetPowerUsage")]
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetPowerUsage")]
     public static extern NvmlReturn NvmlDeviceGetPowerUsage(IntPtr device, out uint power);
 
-    [DllImport(NvmlDll, EntryPoint = "nvmlDeviceGetFanSpeed_v2")]
-    public static extern NvmlReturn NvmlDeviceGetFanSpeed(IntPtr device, uint index, out uint speed);
-
-    [DllImport(NvmlDll, EntryPoint = "nvmlDeviceGetEnforcedPowerLimit")]
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetEnforcedPowerLimit")]
     public static extern NvmlReturn NvmlDeviceGetEnforcedPowerLimit(IntPtr device, out uint powerLimit);
+
+    // Temperature
+
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetTemperature")]
+    public static extern NvmlReturn NvmlDeviceGetTemperature(IntPtr device, NvmlTemperatureSensors sensorType, out uint temp);
+
+    // Clock
+
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetClockInfo")]
+    public static extern NvmlReturn NvmlDeviceGetClockInfo(IntPtr device, NvmlClockType clockType, out uint clock);
+
+    // Fan
+
+
+    [DllImport("nvml.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetNumFans")]
+    public static extern NvmlReturn NvmlDeviceGetNumFans(IntPtr device, out uint fanCount);
+
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetFanSpeed_v2")]
+    public static extern NvmlReturn NvmlDeviceGetFanSpeed(IntPtr device, uint index, out uint speed);
 }
 #pragma warning restore CA5392
 // ReSharper restore InconsistentNaming
