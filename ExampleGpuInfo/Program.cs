@@ -16,7 +16,8 @@ try
                               $"{gpu.Temperature} {gpu.MemoryTotal / 1024 / 1024}MB/{gpu.MemoryFree / 1024 / 1024}MB/{gpu.MemoryUsed / 1024 / 1024}MB " +
                               $"{gpu.PowerUsage / 1000}W/{gpu.PowerLimit / 1024}W " +
                               $"{gpu.GetFanSpeed(0)}%/{gpu.GetFanSpeed(1)}%/{gpu.GetFanSpeed(2)}% " +
-                              $"{gpu.ClockGraphics}/{gpu.ClockSm}/{gpu.ClockMemory}/{gpu.ClockVideo}");
+                              $"{gpu.ClockGraphics}MHz/{gpu.ClockSm}MHz/{gpu.ClockMemory}MHz/{gpu.ClockVideo}MHz " +
+                              $"{gpu.PcieThroughputTx}/{gpu.PcieThroughputRx}");
         }
 
         Thread.Sleep(1000);

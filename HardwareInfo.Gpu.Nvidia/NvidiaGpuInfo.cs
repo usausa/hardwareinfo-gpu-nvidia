@@ -27,6 +27,9 @@ public sealed class NvidiaGpuInfo
     public uint ClockMemory { get; private set; }
     public uint ClockVideo { get; private set; }
 
+    public uint PcieThroughputTx { get; private set; }
+    public uint PcieThroughputRx { get; private set; }
+
     public NvidiaGpuInfo(nint device)
     {
         this.device = device;
@@ -79,6 +82,7 @@ public sealed class NvidiaGpuInfo
         ClockMemory = NvmlDeviceGetClockInfo(device, NvmlClockType.Mem, out var clock2) == NvmlReturn.Success ? clock2 : 0;
         ClockVideo = NvmlDeviceGetClockInfo(device, NvmlClockType.Video, out var clock3) == NvmlReturn.Success ? clock3 : 0;
 
-        // TODO other values
+        PcieThroughputTx = NvmlDeviceGetPcieThroughput(device, NvmlPcieUtilCounter.TxBytes, out var txBytes) == NvmlReturn.Success ? txBytes : 0;
+        PcieThroughputRx = NvmlDeviceGetPcieThroughput(device, NvmlPcieUtilCounter.RxBytes, out var rxBytes) == NvmlReturn.Success ? rxBytes : 0;
     }
 }

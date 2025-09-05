@@ -52,6 +52,12 @@ internal static class NativeMethods
         Video = 3
     }
 
+    public enum NvmlPcieUtilCounter
+    {
+        TxBytes = 0,
+        RxBytes = 1
+    }
+
     //------------------------------------------------------------------------
     // Struct
     //------------------------------------------------------------------------
@@ -119,12 +125,16 @@ internal static class NativeMethods
 
     // Fan
 
-
-    [DllImport("nvml.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetNumFans")]
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetNumFans")]
     public static extern NvmlReturn NvmlDeviceGetNumFans(IntPtr device, out uint fanCount);
 
     [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetFanSpeed_v2")]
     public static extern NvmlReturn NvmlDeviceGetFanSpeed(IntPtr device, uint index, out uint speed);
+
+    // PCIe
+
+    [DllImport(NvmlDll, CallingConvention = CallingConvention.Cdecl, EntryPoint = "nvmlDeviceGetPcieThroughput")]
+    public static extern NvmlReturn NvmlDeviceGetPcieThroughput(IntPtr device, NvmlPcieUtilCounter counter, out uint value);
 }
 #pragma warning restore CA5392
 // ReSharper restore InconsistentNaming
