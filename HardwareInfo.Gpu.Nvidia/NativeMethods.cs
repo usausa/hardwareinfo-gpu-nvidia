@@ -2,8 +2,6 @@ namespace HardwareInfo.Gpu.Nvidia;
 
 using System.Runtime.InteropServices;
 
-using static HardwareInfo.Gpu.Nvidia.NativeMethods;
-
 // https://docs.nvidia.com/deploy/nvml-api/group__nvmlDeviceQueries.html
 // ReSharper disable CommentTypo
 // ReSharper disable IdentifierTypo
