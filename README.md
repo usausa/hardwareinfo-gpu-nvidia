@@ -21,7 +21,7 @@ try
             Console.WriteLine($"{DateTime.Now:HH:mm:ss} | " +
                               $"{gpu.GpuUtilization}% {gpu.MemoryUtilization}% " +
                               $"{gpu.Temperature} {gpu.MemoryTotal / 1024 / 1024}MB/{gpu.MemoryFree / 1024 / 1024}MB/{gpu.MemoryUsed / 1024 / 1024}MB " +
-                              $"{gpu.PowerUsage / 1000}W/{gpu.PowerLimit / 1024}W " +
+                              $"{gpu.PowerUsage / 1000}W/{gpu.PowerLimit / 1000}W " +
                               $"{gpu.GetFanSpeed(0)}%/{gpu.GetFanSpeed(1)}%/{gpu.GetFanSpeed(2)}% " +
                               $"{gpu.ClockGraphics}MHz/{gpu.ClockSm}MHz/{gpu.ClockMemory}MHz/{gpu.ClockVideo}MHz " +
                               $"{gpu.PcieThroughputTx / 1024}MBs/{gpu.PcieThroughputRx / 1024}MBs");

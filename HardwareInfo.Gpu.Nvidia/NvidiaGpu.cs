@@ -32,7 +32,7 @@ public static class NvidiaGpu
     {
         lock (Sync)
         {
-            if (IsAvailable)
+            if (!IsAvailable)
             {
                 return;
             }
