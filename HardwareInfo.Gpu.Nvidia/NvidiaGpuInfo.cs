@@ -172,14 +172,7 @@ public sealed class NvidiaGpuInfo
             CoreCount = cores;
         }
 
-        if (NvmlDeviceGetPciInfo(device, out var pci) == NvmlReturn.Success)
-        {
-            PciBusId = pci.BusId;
-        }
-        else
-        {
-            PciBusId = string.Empty;
-        }
+        PciBusId = NvmlDeviceGetPciInfo(device, out var pci) == NvmlReturn.Success ? pci.BusId : string.Empty;
 
         if (NvmlDeviceGetMaxPcieLinkGeneration(device, out var maxGen) == NvmlReturn.Success)
         {
