@@ -1,5 +1,7 @@
 namespace HardwareInfo.Gpu.Nvidia;
 
+using System.Text;
+
 using static HardwareInfo.Gpu.Nvidia.NativeMethods;
 
 public static class NvidiaGpu
@@ -64,5 +66,28 @@ public static class NvidiaGpu
         }
 
         return list;
+    }
+
+    public static string GetDriverVersion()
+    {
+        Span<byte> buffer = stackalloc byte[80];
+        return NvmlSystemGetDriverVersion(buffer, (uint)buffer.Length) == NvmlReturn.Success ? GetString(buffer) : string.Empty;
+    }
+
+    public static string GetNvmlVersion()
+    {
+        Span<byte> buffer = stackalloc byte[80];
+        return NvmlSystemGetNVMLVersion(buffer, (uint)buffer.Length) == NvmlReturn.Success ? GetString(buffer) : string.Empty;
+    }
+
+    public static int GetCudaDriverVersion()
+    {
+        return NvmlSystemGetCudaDriverVersion(out var version) == NvmlReturn.Success ? version : 0;
+    }
+
+    private static string GetString(ReadOnlySpan<byte> buffer)
+    {
+        var end = buffer.IndexOf((byte)0);
+        return Encoding.UTF8.GetString(end < 0 ? buffer : buffer[..end]);
     }
 }
