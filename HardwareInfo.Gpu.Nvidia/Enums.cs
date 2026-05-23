@@ -1,5 +1,8 @@
 namespace HardwareInfo.Gpu.Nvidia;
 
+#pragma warning disable CA1008
+#pragma warning disable CA1027
+#pragma warning disable CA1028
 // ReSharper disable IdentifierTypo
 // ReSharper disable InconsistentNaming
 public enum GpuBrand
@@ -45,3 +48,6 @@ public enum GpuPerformanceState
 }
 // ReSharper restore IdentifierTypo
 // ReSharper restore InconsistentNaming
+#pragma warning restore CA1028
+#pragma warning restore CA1027
+#pragma warning restore CA1008

@@ -40,13 +40,13 @@ internal static partial class NativeMethods
         Unknown = 999
     }
 
-    public enum NvmlTemperatureSensors
+    public enum NvmlTemperatureSensors : uint
     {
         Gpu = 0,
         Memory = 1
     }
 
-    public enum NvmlBrandType
+    public enum NvmlBrandType : uint
     {
         Unknown = 0,
         Quadro = 1,
@@ -88,7 +88,7 @@ internal static partial class NativeMethods
         Unknown = 32
     }
 
-    public enum NvmlClockType
+    public enum NvmlClockType : uint
     {
         Graphics = 0,
         Sm = 1,
@@ -96,7 +96,7 @@ internal static partial class NativeMethods
         Video = 3
     }
 
-    public enum NvmlPcieUtilCounter
+    public enum NvmlPcieUtilCounter : uint
     {
         TxBytes = 0,
         RxBytes = 1
@@ -122,27 +122,39 @@ internal static partial class NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 8)]
-    public unsafe struct NvmlPciInfo
+    public struct NvmlPciInfo
     {
-        private fixed byte busIdLegacy[16];
+        private unsafe fixed byte busIdLegacy[16];
         public uint Domain;
         public uint Bus;
         public uint Device;
         public uint PciDeviceId;
         public uint PciSubSystemId;
-        private fixed byte _busId[32];
+        private unsafe fixed byte _busId[32];
 
-        public readonly string BusIdLegacy
+        public readonly unsafe string BusIdLegacy
         {
-            get { fixed (byte* p = busIdLegacy) return ReadFixedString(p, 16); }
+            get
+            {
+                fixed (byte* p = busIdLegacy)
+                {
+                    return ReadFixedString(p, 16);
+                }
+            }
         }
 
-        public readonly string BusId
+        public readonly unsafe string BusId
         {
-            get { fixed (byte* p = _busId) return ReadFixedString(p, 32); }
+            get
+            {
+                fixed (byte* p = _busId)
+                {
+                    return ReadFixedString(p, 32);
+                }
+            }
         }
 
-        private static string ReadFixedString(byte* ptr, int maxLength)
+        private static unsafe string ReadFixedString(byte* ptr, int maxLength)
         {
             var span = new ReadOnlySpan<byte>(ptr, maxLength);
             var end = span.IndexOf((byte)0);
