@@ -1,8 +1,12 @@
-# hardwareinfo-gpu-nvidia
+# NVIDIA GPU information library
+
+| Package | Info |
+|:-|:-|
+| HardwareInfo.Gpu.Nvidia | [![NuGet](https://img.shields.io/nuget/v/HardwareInfo.Gpu.Nvidia.svg)](https://www.nuget.org/packages/HardwareInfo.Gpu.Nvidia) |
 
 nvml.dll wrapper.
 
-# Usage
+## Usage
 
 ```csharp
 using HardwareInfo.Gpu.Nvidia;
@@ -36,7 +40,7 @@ finally
 }
 ```
 
-# TODO?
+## TODO?
 
 - Dynamic loading
 - Linux support
