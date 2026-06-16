@@ -68,8 +68,9 @@ internal static partial class NativeMethods
         Volta = 5,
         Turing = 6,
         Ampere = 7,
-        Ada = 9,
-        Hopper = 10,
+        Ada = 8,
+        Hopper = 9,
+        Blackwell = 10,
         Unknown = 0xFFFFFFFF
     }
 
@@ -315,6 +316,10 @@ internal static partial class NativeMethods
     [LibraryImport(NvmlDll, EntryPoint = "nvmlDeviceGetCurrentClocksThrottleReasons")]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NvmlReturn NvmlDeviceGetCurrentClocksThrottleReasons(IntPtr device, out ulong clocksThrottleReasons);
+
+    [LibraryImport(NvmlDll, EntryPoint = "nvmlDeviceGetCurrentClocksEventReasons")]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial NvmlReturn NvmlDeviceGetCurrentClocksEventReasons(IntPtr device, out ulong clocksEventReasons);
 
     [LibraryImport(NvmlDll, EntryPoint = "nvmlDeviceGetCurrPcieLinkGeneration")]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

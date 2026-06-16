@@ -27,8 +27,9 @@ public enum GpuArchitecture : uint
     Volta = 5,
     Turing = 6,
     Ampere = 7,
-    Ada = 9,
-    Hopper = 10,
+    Ada = 8,
+    Hopper = 9,
+    Blackwell = 10,
     Unknown = 0xFFFFFFFF
 }
 

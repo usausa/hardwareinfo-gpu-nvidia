@@ -9,7 +9,7 @@ try
     Console.WriteLine($"Driver  : {NvidiaGpu.GetDriverVersion()}");
     Console.WriteLine($"NVML    : {NvidiaGpu.GetNvmlVersion()}");
     var cuda = NvidiaGpu.GetCudaDriverVersion();
-    Console.WriteLine($"CUDA    : {cuda / 1000}.{cuda % 1000}");
+    Console.WriteLine($"CUDA    : {cuda / 1000}.{(cuda % 1000) / 10}");
     Console.WriteLine();
 
     var gpus = NvidiaGpu.GetInformation();

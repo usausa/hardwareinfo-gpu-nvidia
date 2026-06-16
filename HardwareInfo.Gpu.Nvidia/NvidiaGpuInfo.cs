@@ -10,6 +10,8 @@ public sealed class NvidiaGpuInfo
 
     private readonly uint[] fanSpeeds;
 
+    private static bool useLegacyThrottleReasons;
+
     //--------------------------------------------------------------------
     // Static properties
     //--------------------------------------------------------------------
@@ -252,15 +254,27 @@ public sealed class NvidiaGpuInfo
         {
             PowerUsage = powerUsage;
         }
+        else
+        {
+            PowerUsage = 0;
+        }
 
         if (NvmlDeviceGetEnforcedPowerLimit(device, out var powerLimit) == NvmlReturn.Success)
         {
             PowerLimit = powerLimit;
         }
+        else
+        {
+            PowerLimit = 0;
+        }
 
         if (NvmlDeviceGetPowerManagementDefaultLimit(device, out var defLimit) == NvmlReturn.Success)
         {
             PowerLimitDefault = defLimit;
+        }
+        else
+        {
+            PowerLimitDefault = 0;
         }
 
         if (NvmlDeviceGetPowerManagementLimitConstraints(device, out var minLimit, out var maxLimit) == NvmlReturn.Success)
@@ -268,15 +282,28 @@ public sealed class NvidiaGpuInfo
             PowerLimitMin = minLimit;
             PowerLimitMax = maxLimit;
         }
+        else
+        {
+            PowerLimitMin = 0;
+            PowerLimitMax = 0;
+        }
 
         if (NvmlDeviceGetTemperature(device, NvmlTemperatureSensors.Gpu, out var temperature) == NvmlReturn.Success)
         {
             Temperature = temperature;
         }
+        else
+        {
+            Temperature = 0;
+        }
 
         if (NvmlDeviceGetTemperature(device, NvmlTemperatureSensors.Memory, out var memTemp) == NvmlReturn.Success)
         {
             MemoryTemperature = memTemp;
+        }
+        else
+        {
+            MemoryTemperature = 0;
         }
 
         for (var i = 0u; i < FanCount; i++)
@@ -285,46 +312,82 @@ public sealed class NvidiaGpuInfo
             {
                 fanSpeeds[i] = fanSpeed;
             }
+            else
+            {
+                fanSpeeds[i] = 0;
+            }
         }
 
         if (NvmlDeviceGetClockInfo(device, NvmlClockType.Graphics, out var clock0) == NvmlReturn.Success)
         {
             ClockGraphics = clock0;
         }
+        else
+        {
+            ClockGraphics = 0;
+        }
 
         if (NvmlDeviceGetClockInfo(device, NvmlClockType.Sm, out var clock1) == NvmlReturn.Success)
         {
             ClockSm = clock1;
+        }
+        else
+        {
+            ClockSm = 0;
         }
 
         if (NvmlDeviceGetClockInfo(device, NvmlClockType.Mem, out var clock2) == NvmlReturn.Success)
         {
             ClockMemory = clock2;
         }
+        else
+        {
+            ClockMemory = 0;
+        }
 
         if (NvmlDeviceGetClockInfo(device, NvmlClockType.Video, out var clock3) == NvmlReturn.Success)
         {
             ClockVideo = clock3;
+        }
+        else
+        {
+            ClockVideo = 0;
         }
 
         if (NvmlDeviceGetPcieThroughput(device, NvmlPcieUtilCounter.TxBytes, out var txBytes) == NvmlReturn.Success)
         {
             PcieThroughputTx = txBytes;
         }
+        else
+        {
+            PcieThroughputTx = 0;
+        }
 
         if (NvmlDeviceGetPcieThroughput(device, NvmlPcieUtilCounter.RxBytes, out var rxBytes) == NvmlReturn.Success)
         {
             PcieThroughputRx = rxBytes;
+        }
+        else
+        {
+            PcieThroughputRx = 0;
         }
 
         if (NvmlDeviceGetEncoderUtilization(device, out var encUtil, out _) == NvmlReturn.Success)
         {
             EncoderUtilization = encUtil;
         }
+        else
+        {
+            EncoderUtilization = 0;
+        }
 
         if (NvmlDeviceGetDecoderUtilization(device, out var decUtil, out _) == NvmlReturn.Success)
         {
             DecoderUtilization = decUtil;
+        }
+        else
+        {
+            DecoderUtilization = 0;
         }
 
         if (NvmlDeviceGetPerformanceState(device, out var pState) == NvmlReturn.Success)
@@ -336,20 +399,52 @@ public sealed class NvidiaGpuInfo
             PerformanceState = GpuPerformanceState.Unknown;
         }
 
-        if (NvmlDeviceGetCurrentClocksThrottleReasons(device, out var throttle) == NvmlReturn.Success)
-        {
-            ThrottleReasons = throttle;
-        }
+        ThrottleReasons = GetThrottleReasons();
 
         if (NvmlDeviceGetCurrPcieLinkGeneration(device, out var linkGen) == NvmlReturn.Success)
         {
             PcieLinkGeneration = linkGen;
+        }
+        else
+        {
+            PcieLinkGeneration = 0;
         }
 
         if (NvmlDeviceGetCurrPcieLinkWidth(device, out var linkWidth) == NvmlReturn.Success)
         {
             PcieLinkWidth = linkWidth;
         }
+        else
+        {
+            PcieLinkWidth = 0;
+        }
+    }
+
+    private ulong GetThrottleReasons()
+    {
+        if (!useLegacyThrottleReasons)
+        {
+            try
+            {
+                if (NvmlDeviceGetCurrentClocksEventReasons(device, out var reasons) == NvmlReturn.Success)
+                {
+                    return reasons;
+                }
+
+                return 0;
+            }
+            catch (EntryPointNotFoundException)
+            {
+                useLegacyThrottleReasons = true;
+            }
+        }
+
+        if (NvmlDeviceGetCurrentClocksThrottleReasons(device, out var legacyReasons) == NvmlReturn.Success)
+        {
+            return legacyReasons;
+        }
+
+        return 0;
     }
 
     //--------------------------------------------------------------------
