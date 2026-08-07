@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/Library/">
-    <Project Path="ExampleGpuInfo/ExampleGpuInfo.csproj" />
+    <Project Path="ExampleGpuInfo/ExampleGpuInfo.csproj" DefaultStartup="true" />
     <Project Path="HardwareInfo.Gpu.Nvidia/HardwareInfo.Gpu.Nvidia.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
