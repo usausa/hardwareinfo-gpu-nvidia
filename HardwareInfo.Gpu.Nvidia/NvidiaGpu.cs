@@ -12,8 +12,6 @@ public static class NvidiaGpu
     private static readonly object Sync = new();
 #endif
 
-    private static bool initialized;
-
     // ReSharper disable once MemberCanBePrivate.Global
     public static bool IsAvailable { get; private set; }
 
@@ -25,8 +23,6 @@ public static class NvidiaGpu
             {
                 return;
             }
-
-            initialized = true;
 
             var ret = NvmlInit();
 
@@ -44,8 +40,6 @@ public static class NvidiaGpu
 
                 IsAvailable = false;
             }
-
-            initialized = false;
         }
     }
 
