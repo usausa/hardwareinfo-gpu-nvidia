@@ -9,6 +9,7 @@ using System.Text;
 // ReSharper disable IdentifierTypo
 // ReSharper disable InconsistentNaming
 // ReSharper disable StringLiteralTypo
+// ReSharper disable RedundantUnsafeContext
 #pragma warning disable CA5392
 internal static partial class NativeMethods
 {
