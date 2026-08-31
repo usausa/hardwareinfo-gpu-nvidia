@@ -126,13 +126,13 @@ internal static partial class NativeMethods
     [StructLayout(LayoutKind.Sequential, Pack = 8)]
     public struct NvmlPciInfo
     {
-        private unsafe fixed byte busIdLegacy[16];
+        private fixed byte busIdLegacy[16];
         public uint Domain;
         public uint Bus;
         public uint Device;
         public uint PciDeviceId;
         public uint PciSubSystemId;
-        private unsafe fixed byte _busId[32];
+        private fixed byte busId[32];
 
         public readonly unsafe string BusIdLegacy
         {
@@ -149,7 +149,7 @@ internal static partial class NativeMethods
         {
             get
             {
-                fixed (byte* p = _busId)
+                fixed (byte* p = busId)
                 {
                     return ReadFixedString(p, 32);
                 }

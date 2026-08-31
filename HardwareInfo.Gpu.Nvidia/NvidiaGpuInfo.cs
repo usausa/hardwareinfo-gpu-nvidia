@@ -218,7 +218,7 @@ public sealed class NvidiaGpuInfo
     // Fan
     //--------------------------------------------------------------------
 
-    public uint GetFanSpeed(int index) => index >= 0 && index < FanCount ? fanSpeeds[index] : 0;
+    public uint GetFanSpeed(int index) => (index >= 0) && (index < FanCount) ? fanSpeeds[index] : 0;
 
     //--------------------------------------------------------------------
     // Update

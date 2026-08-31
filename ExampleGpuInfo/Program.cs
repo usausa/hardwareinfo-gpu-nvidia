@@ -20,7 +20,7 @@ try
         Console.WriteLine("==== GPU Static Info ====");
         Console.WriteLine($"Name        : {gpu.Name}");
         Console.WriteLine($"UUID        : {gpu.Uuid}");
-        Console.WriteLine($"Serial      : {(string.IsNullOrEmpty(gpu.Serial) ? "(N/A)" : gpu.Serial)}");
+        Console.WriteLine($"Serial      : {(String.IsNullOrEmpty(gpu.Serial) ? "(N/A)" : gpu.Serial)}");
         Console.WriteLine($"VBIOS       : {gpu.VbiosVersion}");
         Console.WriteLine($"Brand       : {gpu.Brand}");
         Console.WriteLine($"Architecture: {gpu.Architecture}");
@@ -49,7 +49,7 @@ try
             Console.WriteLine($"  PCIe      : Gen{gpu.PcieLinkGeneration} x{gpu.PcieLinkWidth}  Tx={gpu.PcieThroughputTx}KB/s Rx={gpu.PcieThroughputRx}KB/s");
 
             var fans = Enumerable.Range(0, (int)gpu.FanCount).Select(i => $"{gpu.GetFanSpeed(i)}%");
-            Console.WriteLine($"  Fan       : {string.Join(" / ", fans)}");
+            Console.WriteLine($"  Fan       : {String.Join(" / ", fans)}");
 
             Console.WriteLine();
         }
