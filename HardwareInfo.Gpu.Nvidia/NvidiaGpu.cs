@@ -6,11 +6,7 @@ using static HardwareInfo.Gpu.Nvidia.NativeMethods;
 
 public static class NvidiaGpu
 {
-#if NET9_0_OR_GREATER
     private static readonly Lock Sync = new();
-#else
-    private static readonly object Sync = new();
-#endif
 
     // ReSharper disable once MemberCanBePrivate.Global
     public static bool IsAvailable { get; private set; }

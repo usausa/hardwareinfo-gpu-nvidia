@@ -156,7 +156,11 @@ internal static partial class NativeMethods
             }
         }
 
+#if NET11_0_OR_GREATER
+        private static string ReadFixedString(byte* ptr, int maxLength)
+#else
         private static unsafe string ReadFixedString(byte* ptr, int maxLength)
+#endif
         {
             var span = new ReadOnlySpan<byte>(ptr, maxLength);
             var end = span.IndexOf((byte)0);
